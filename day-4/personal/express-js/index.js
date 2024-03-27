@@ -22,22 +22,49 @@ app.get("/bmi-form", function (req, res) {
   res.status(200).send(bmiForm);
 });
 
-app.get("/bmi-result", function (req, res) {
+app.post("/bmi-result", function (req, res) {
+  // const bmi = req.query.bmi;
+
+  const data = req.body;
+
+  const weight = Number(data.weight);
+  const height = Number(data.height);
+  const bmi = (weight / height ** 2).toFixed(2);
+
   const bmiResultPath = path.join(__dirname, "pages", "bmi-result.html");
-  const bmiResult = fs.readFileSync(bmiResultPath, "utf8");
+  let bmiResult = fs
+    .readFileSync(bmiResultPath, "utf8")
+    .replace("[[BMI-RESULT]]", bmi);
+
+  // if (bmi) {
+  //   bmiResult = bmiResult.replace("[[BMI-RESULT]]", bmi);
+
+  if (bmi < 18.5) {
+    bmiResult = bmiResult.replace("[[BMI-RANGE]]", "Underweight");
+  } else if (bmi < 24.9) {
+    bmiResult = bmiResult.replace("[[BMI-RANGE]]", "Normal");
+  } else if (bmi < 29.9) {
+    bmiResult = bmiResult.replace("[[BMI-RANGE]]", "Overweight");
+  } else {
+    bmiResult = bmiResult.replace("[[BMI-RANGE]]", "Obese");
+  }
+  // } else {
+  //   bmiResult = bmiResult.replace("[[BMI-RESULT]]", "No BMI value ");
+  // }
+
   res.setHeader("Content-Type", "text/html");
   res.status(200).send(bmiResult);
 });
 
-app.post("/calculate", function (req, res) {
-  const data = req.body;
-  console.log(data);
-  const weight = Number(data.weight);
-  const height = Number(data.height);
-  const bmi = (weight / height ** 2).toFixed(2);
-  console.log(bmi);
-  res.redirect("/bmi-result");
-});
+// app.post("/calculate", function (req, res) {
+//   const data = req.body;
+
+//   const weight = Number(data.weight);
+//   const height = Number(data.height);
+//   const bmi = (weight / height ** 2).toFixed(2);
+
+//   res.redirect("/bmi-result?bmi=" + bmi);
+// });
 
 app.use(function (req, res) {
   const notFoundPath = path.join(__dirname, "pages", "404.html");
