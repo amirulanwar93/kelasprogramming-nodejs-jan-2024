@@ -5,6 +5,8 @@ const app = express();
 const PORT = 8989;
 
 app.use(express.static("public"));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.get("/", function (req, res) {
   const homePagePath = path.join(__dirname, "pages", "index.html");
@@ -28,6 +30,12 @@ app.get("/bmi-result", function (req, res) {
 });
 
 app.post("/calculate", function (req, res) {
+  const data = req.body;
+  console.log(data);
+  const weight = Number(data.weight);
+  const height = Number(data.height);
+  const bmi = (weight / height ** 2).toFixed(2);
+  console.log(bmi);
   res.redirect("/bmi-result");
 });
 
