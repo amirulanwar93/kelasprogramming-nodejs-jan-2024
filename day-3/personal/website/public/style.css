@@ -1,0 +1,26 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  background-color: aqua;
+  color: gray;
+  line-height: 1.6;
+  font-size: 16px;
+  margin-top: 5rem;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background-color: blue;
+  color: beige;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
