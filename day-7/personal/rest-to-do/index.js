@@ -1,7 +1,7 @@
 import express from "express";
 import healthController from "./controller/health.js";
 import notFound from "./controller/not-found.js";
-import { testConnection } from "./database/connection.js";
+import { databaseInit } from "./database/connection.js";
 
 const app = express();
 
@@ -10,7 +10,7 @@ const PORT = 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-testConnection();
+databaseInit();
 
 app.get("/", healthController.get);
 app.post("/", healthController.post);

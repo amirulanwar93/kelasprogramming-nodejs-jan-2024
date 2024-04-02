@@ -1,9 +1,12 @@
 import pkg from "pg";
+import createUsersTable from "../model/user.js";
+import createToDosTable from "../model/todo.js";
 const { Pool } = pkg;
+
 // import dotenv from "dotenv";
 // dotenv.config();
 
-const pool = new Pool({
+export const pool = new Pool({
   host: "localhost",
   user: "postgres",
   password: "AamirulL93*",
@@ -14,7 +17,7 @@ const pool = new Pool({
   connectionTimeoutMillis: 2000,
 });
 
-export async function testConnection() {
+export async function databaseInit() {
   try {
     const dbName = await pool.query("SELECT current_database()");
     const dbRes = await pool.query("SELECT NOW()");
@@ -22,6 +25,10 @@ export async function testConnection() {
     const name = dbName.rows[0].current_database;
 
     console.log(`Connected to ${name} at ${time}`);
+
+    // create database tables
+    await createUsersTable();
+    await createToDosTable();
   } catch (error) {
     console.error(error);
 
