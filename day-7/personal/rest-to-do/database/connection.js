@@ -2,15 +2,13 @@ import pkg from "pg";
 import createUsersTable from "../model/user.js";
 import createToDosTable from "../model/todo.js";
 const { Pool } = pkg;
-
-// import dotenv from "dotenv";
-// dotenv.config();
+import "dotenv/config";
 
 export const pool = new Pool({
-  host: "localhost",
-  user: "postgres",
-  password: "AamirulL93*",
-  database: "todo-app-2024",
+  host: process.env.PGHOST,
+  user: process.env.PGUSER,
+  password: process.env.PGPASSWORD,
+  database: process.env.PGDATABASE,
 
   max: 20,
   idleTimeoutMillis: 30000,
@@ -31,7 +29,6 @@ export async function databaseInit() {
     await createToDosTable();
   } catch (error) {
     console.error(error);
-
     console.error("Database connection failed");
   }
 }
