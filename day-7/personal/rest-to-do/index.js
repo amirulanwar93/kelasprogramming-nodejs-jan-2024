@@ -20,11 +20,12 @@ databaseInit();
 
 app.get("/", healthController.get);
 app.post("/", healthController.post);
-app.post("/users", createUser);
 app.get("/users", readAllUsers);
 app.get("/users/:id", readUserById);
 app.put("/users/:id", updateUser);
 app.delete("/users/:id", deleteUser);
+
+app.post("/register", createUser);
 
 app.use(notFound);
 
