@@ -1,4 +1,5 @@
 import { pool } from "../../database/connection.js";
+import bcrypt from "bcrypt";
 
 const query = `
 INSERT INTO users (username, password, email, is_admin)
@@ -7,6 +8,8 @@ INSERT INTO users (username, password, email, is_admin)
 
 async function createUser(req, res) {
   try {
+    const saltRounds = 10;
+
     const username = req.body.username;
     const password = req.body.password;
     const email = req.body.email;
@@ -18,6 +21,9 @@ async function createUser(req, res) {
       });
     }
 
+    const salt = bcrypt.genSaltSync(saltRounds);
+    const hashedPassword = bcrypt.hashSync(password, salt);
+
     const emailRegex = /\S+@\S+\.\S+/;
     const isValidEmail = emailRegex.test(email);
     if (!isValidEmail) {
@@ -26,7 +32,12 @@ async function createUser(req, res) {
       });
     }
 
-    const dbRes = await pool.query(query, [username, password, email, isAdmin]);
+    const dbRes = await pool.query(query, [
+      username,
+      hashedPassword,
+      email,
+      isAdmin,
+    ]);
     console.log(dbRes);
     res.status(201).json({
       message: "User is created",
