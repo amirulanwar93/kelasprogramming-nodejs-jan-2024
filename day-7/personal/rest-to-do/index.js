@@ -10,6 +10,8 @@ import {
 import updateUser from "./controller/user.controller/update.js";
 import deleteUser from "./controller/user.controller/delete.js";
 
+import createTodo from "./controller/todo.controller/create.js";
+
 const app = express();
 const PORT = 3000;
 
@@ -26,6 +28,8 @@ app.put("/users/:id", updateUser);
 app.delete("/users/:id", deleteUser);
 
 app.post("/register", createUser);
+
+app.post("/todos", createTodo);
 
 app.use(notFound);
 
