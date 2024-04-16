@@ -11,6 +11,8 @@ import updateUser from "./controller/user.controller/update.js";
 import deleteUser from "./controller/user.controller/delete.js";
 import createTodo from "./controller/todo.controller/create.js";
 import listAllTodos from "./controller/todo.controller/read.js";
+import createToken from "./controller/auth.js";
+import isAuth from "./middleware/isAuth.js";
 
 const app = express();
 const PORT = 8787;
@@ -33,10 +35,11 @@ app.put("/users/:id", updateUser);
 app.delete("/users/:id", deleteUser);
 
 app.post("/register", createUser);
+app.post("/login", createToken);
 
-// route to handle todos
-app.get("/todos/:userId", listAllTodos);
-app.post("/todos", createTodo);
+// route to handle todos and authenticated routes
+app.get("/todos", isAuth, listAllTodos);
+app.post("/todos", isAuth, createTodo);
 
 // not found (404) route
 app.use(notFound);

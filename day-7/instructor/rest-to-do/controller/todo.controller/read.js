@@ -3,12 +3,14 @@
 import { pool } from "../../database/connection.js";
 
 const listAllTodos = async (req, res) => {
+  // get user id from req object which is set in isAuth middleware
+  const userId = req.userId;
   try {
     const query = `
             SELECT * FROM to_dos
             WHERE user_id = $1
         `;
-    const userId = req.params.userId;
+
     const dbRes = await pool.query(query, [userId]);
     // console.log(dbRes);
     const data = dbRes.rows;
