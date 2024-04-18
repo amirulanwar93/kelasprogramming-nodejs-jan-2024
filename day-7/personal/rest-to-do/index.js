@@ -3,6 +3,7 @@ import healthController from "./controller/health.js";
 import notFound from "./controller/not-found.js";
 import { databaseInit } from "./database/connection.js";
 import createUser from "./controller/user.controller/create.js";
+import createToken from "./controller/auth.js";
 import {
   readAllUsers,
   readUserById,
@@ -11,6 +12,7 @@ import updateUser from "./controller/user.controller/update.js";
 import deleteUser from "./controller/user.controller/delete.js";
 
 import createTodo from "./controller/todo.controller/create.js";
+import listAllTodos from "./controller/todo.controller/read.js"
 
 const app = express();
 const PORT = 3000;
@@ -28,7 +30,9 @@ app.put("/users/:id", updateUser);
 app.delete("/users/:id", deleteUser);
 
 app.post("/register", createUser);
+app.post("/login", createToken);
 
+app.get("/todos", listAllTodos);
 app.post("/todos", createTodo);
 
 app.use(notFound);

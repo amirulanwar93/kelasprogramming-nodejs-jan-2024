@@ -3,7 +3,7 @@ import { pool } from "../database/connection.js";
 const query = `
   CREATE TABLE IF NOT EXISTS to_dos (
     id SERIAL PRIMARY KEY,
-    text VARCHAR(255) UNIQUE NOT NULL,
+    text VARCHAR(255) NOT NULL,
     status BOOLEAN DEFAULT FALSE,
     user_id INTEGER REFERENCES users(id),
     created_at TIMESTAMP DEFAULT NOW()

@@ -1,8 +1,10 @@
+import { pool } from "../../database/connection.js";
+
 const createTodo = async (req, res) => {
   try {
     const query = `
     INSERT INTO to_dos (text, user_id)
-    VALUES ($1, $2, $3)
+    VALUES ($1, $2)
     `;
 
     const text = req.body.text;

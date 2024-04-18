@@ -1,10 +1,12 @@
 import { pool } from "../../database/connection.js";
-
+import bcrypt from "bcrypt";
 
 const updateUserById = `UPDATE users SET username = $1, email = $2, password = $3 WHERE id = $4`;
 
 async function updateUser(req, res) {
   try {
+    const saltRounds = 10;
+
     const id = req.params.id;
     const username = req.body.username;
     const email = req.body.email;
@@ -18,6 +20,9 @@ async function updateUser(req, res) {
       });
     }
 
+    const salt = bcrypt.genSaltSync(saltRounds);
+    const hashedPassword = bcrypt.hashSync(password, salt);
+
     const emailRegex = /\S+@\S+\.\S+/;
     const isValidEmail = emailRegex.test(email);
     if (!isValidEmail) {
@@ -26,7 +31,7 @@ async function updateUser(req, res) {
       });
     }
 
-    await pool.query(updateUserById, [username, email, password, id]);
+    await pool.query(updateUserById, [username, email, hashedPassword, id]);
     res.status(200).json({ message: "User updated successfully" });
   } catch (error) {
     console.error();
