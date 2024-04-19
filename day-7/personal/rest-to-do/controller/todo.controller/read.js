@@ -1,6 +1,7 @@
 import { pool } from "../../database/connection.js";
 
 const listAllTodos = async (req, res) => {
+  const userId=req.userId
   try {
     const query = `
     SELECT * FROM to_dos

@@ -8,7 +8,7 @@ const createTodo = async (req, res) => {
     `;
 
     const text = req.body.text;
-    const userId = req.body.userId;
+    const userId = req.userId;
 
     if (!text || !userId) {
       return res.status(400).json({

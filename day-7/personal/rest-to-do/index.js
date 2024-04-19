@@ -12,7 +12,8 @@ import updateUser from "./controller/user.controller/update.js";
 import deleteUser from "./controller/user.controller/delete.js";
 
 import createTodo from "./controller/todo.controller/create.js";
-import listAllTodos from "./controller/todo.controller/read.js"
+import listAllTodos from "./controller/todo.controller/read.js";
+import isAuth from "./middleware/isAuth.js";
 
 const app = express();
 const PORT = 3000;
@@ -32,8 +33,8 @@ app.delete("/users/:id", deleteUser);
 app.post("/register", createUser);
 app.post("/login", createToken);
 
-app.get("/todos", listAllTodos);
-app.post("/todos", createTodo);
+app.get("/todos", isAuth, listAllTodos);
+app.post("/todos",isAuth, createTodo);
 
 app.use(notFound);
 

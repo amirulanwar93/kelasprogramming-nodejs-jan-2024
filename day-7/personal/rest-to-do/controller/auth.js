@@ -35,10 +35,16 @@ const createToken = async (req, res) => {
       });
     }
 
-    const token = jwt.sign({ foo: "bar" }, "shhhhh");
+    const data = {
+      id: user.id,
+      email: user.email,
+    };
+    const secretKey = "superdupersecretkey";
+    const token = jwt.sign(data, secretKey);
 
     res.status(200).json({
       message: "Token has been created",
+
       token: token,
     });
   } catch (error) {
