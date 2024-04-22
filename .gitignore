@@ -1,5 +1,6 @@
 node_modules
 .env
+uploads
 
 ### macOS template
 # General
@@ -29,7 +30,6 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-
 ### Linux template
 *~
 
@@ -44,7 +44,6 @@ Temporary Items
 
 # .nfs files are created when an open file is removed but is still being accessed
 .nfs*
-
 
 ### Windows template
 # Windows thumbnail cache files
