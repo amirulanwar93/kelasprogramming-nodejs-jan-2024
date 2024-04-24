@@ -2,13 +2,16 @@ import express from "express";
 import "dotenv/config";
 import publicRouter from "./routes/index.js";
 import privateRouter from "./routes/admin.js";
+import { databaseInit } from "./database/index.js";
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = 8585;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
+
+databaseInit();
 
 app.use("/", publicRouter);
 app.use("/admin", privateRouter);
