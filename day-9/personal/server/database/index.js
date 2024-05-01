@@ -1,6 +1,8 @@
 import pkg from "pg";
 const { Pool } = pkg;
 import "dotenv/config";
+import createUsersTable from "../models/user.js";
+import createSlotsTable from "../models/slot.js";
 
 export const pool = new Pool({
   host: process.env.PGHOST,
@@ -20,6 +22,8 @@ export async function databaseInit() {
     const time = dbRes.rows[0].now;
     const name = dbName.rows[0].current_database;
     console.log(`Connected to ${name} at ${time}`);
+    await createUsersTable();
+    await createSlotsTable();
   } catch (error) {
     console.error(error);
     console.error("Database connection failed");
