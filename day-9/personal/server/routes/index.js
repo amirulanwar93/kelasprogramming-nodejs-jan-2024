@@ -12,8 +12,8 @@ publicRouter.get("/helloworld-json", (req, res) => {
   res.json({ message: "Hello world!" });
 });
 
-publicRouter.post('/register', register)
+publicRouter.post("/register", register);
 
-publicRouter.post('/login', login)
+publicRouter.post("/login", login);
 
 export default publicRouter;

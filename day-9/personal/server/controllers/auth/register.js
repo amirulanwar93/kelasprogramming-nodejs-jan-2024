@@ -1,5 +1,6 @@
 import { pool } from "../../database/index.js";
 import bcrypt from "bcrypt";
+import { validateEmail } from "../../utils/helper.js";
 
 const insertNewUser = `
 INSERT INTO users (password, email)
@@ -25,8 +26,7 @@ const register = async (req, res) => {
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(password, salt);
 
-    const emailRegex = /\S+@\S+\.\S+/;
-    const isValidEmail = emailRegex.test(email);
+    const isValidEmail = validateEmail(email);
     if (!isValidEmail) {
       return res.status(400).json({
         message: "Invalid email",
