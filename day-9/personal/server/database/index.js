@@ -1,6 +1,6 @@
 import pkg from "pg";
 const { Pool } = pkg;
-import "dotenv/config";
+// import "dotenv/config";
 import createUsersTable from "../models/user.js";
 import createSlotsTable from "../models/slot.js";
 
